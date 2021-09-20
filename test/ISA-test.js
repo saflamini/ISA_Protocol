@@ -19,12 +19,6 @@ describe("ISA Deploys Correctly", function () {
 
       );
       await isa.deployed();
-    //   let payDestination;
-    //   let stakeRequirement;
-    //   let repaymentPercent;
-    //   let repaymentPeriodLength;
-    //   let maxRepaymentAmount;
-    //   let gracePeriod;
       
       const ISAInfo = await isa.getAgreementInfo();
       
@@ -46,6 +40,30 @@ describe("ISA Deploys Correctly", function () {
       expect(gracePeriod).to.equal(15811200);
     });
 
-
   });
+
+  describe("Agreement Initalization", function() {
+      beforeEach(async () => {
+        //deploy a contract and get signers before each test
+        //also need to figure out how to get acct2 some fDAIx
+        const [acct1, acct2, acct3] = await ethers.getSigners();
+        const ISA = await ethers.getContractFactory("ISA");
+        const isa = await ISA.deploy(
+          "0xEB796bdb90fFA0f28255275e16936D25d3418603",
+          "0x49e565Ed1bdc17F3d220f72DF0857C26FA83F873",
+          "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f",
+          BigNumber.from("100000000000000000000"), //100
+          1000, // 10 percent
+          94608000, //3 years
+          BigNumber.from("100000000000000000000000"), //10000
+          15811200 //6 months
+  
+        );
+        await isa.deployed();
+      })
+  })
+
+  it("Should create an agreement when stake is submitted", async () => {
+        
+})
   
